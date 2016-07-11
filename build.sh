@@ -62,9 +62,6 @@ function initialize {
 
   rm -f ${build_log}
 
-  #preinstall
-  ./preinstall.sh
-
   # create our configuration file if it doesn't yet exist
   if [ ! -f "${config_file}" ]; then
     # determine OS and architecture
@@ -73,13 +70,9 @@ function initialize {
     # find / ask for the NDK
     echo "Looking for the NDK ..."
     NDK=$(find_ndk)
-    echo -n "Path to NDK [$NDK] (you could user default, just type default): "
+    echo -n "Path to NDK [$NDK]: "
     read typed_ndk_root
-    if [ "$typed_ndk_root" = "default" ]; then
-      NDK="$(pwd)/src/android-ndk-r10e"
-    else
-      test "$typed_ndk_root" && NDK="$typed_ndk_root"
-    fi
+    test "$typed_ndk_root" && NDK="$typed_ndk_root"
 
     # save our configuration
     echo "Saving configuration into ${config_file} ..."
